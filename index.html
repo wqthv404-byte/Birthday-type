@@ -96,6 +96,12 @@ h1{
     opacity:0;
   }
 }
+  @keyframes fall{
+  to{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+  }
 </style>
 </head>
 
@@ -169,21 +175,15 @@ function type(){
   }
 }
 
-/* blow candle */
 function blow(){
   document.querySelector(".flame").style.display="none";
 
-  // ek baar wala
   fireworks();
 
-  // continuous
   const auto=setInterval(fireworks,800);
-
-  // 5 second baad stop
   setTimeout(()=>clearInterval(auto),5000);
 
   type();
-  }
 }
 
 /* fireworks */
@@ -200,8 +200,10 @@ function fireworks(){
     setTimeout(()=>f.remove(),1000);
   }
 }
-  function rainEmoji(){
-  setInterval(()=>{
+  let rainInterval;
+
+function rainEmoji(){
+  rainInterval=setInterval(()=>{
     const e=document.createElement("div");
     e.innerHTML=["🎉","🎊","✨","🎈"][Math.floor(Math.random()*4)];
     e.style.position="fixed";
@@ -212,7 +214,8 @@ function fireworks(){
     document.body.appendChild(e);
     setTimeout(()=>e.remove(),3000);
   },200);
-  }
+}
+
 </script>
 
 </body>
