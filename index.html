@@ -155,6 +155,7 @@ function openWish(){
   pages[1].classList.remove("active");
   pages[2].classList.add("active");
   document.getElementById("music").play();
+  rainEmoji();
 }
 
 /* typing */
@@ -171,8 +172,18 @@ function type(){
 /* blow candle */
 function blow(){
   document.querySelector(".flame").style.display="none";
+
+  // ek baar wala
   fireworks();
+
+  // continuous
+  const auto=setInterval(fireworks,800);
+
+  // 5 second baad stop
+  setTimeout(()=>clearInterval(auto),5000);
+
   type();
+  }
 }
 
 /* fireworks */
@@ -189,6 +200,19 @@ function fireworks(){
     setTimeout(()=>f.remove(),1000);
   }
 }
+  function rainEmoji(){
+  setInterval(()=>{
+    const e=document.createElement("div");
+    e.innerHTML=["🎉","🎊","✨","🎈"][Math.floor(Math.random()*4)];
+    e.style.position="fixed";
+    e.style.top="-20px";
+    e.style.left=Math.random()*100+"vw";
+    e.style.fontSize="20px";
+    e.style.animation="fall 3s linear forwards";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),3000);
+  },200);
+  }
 </script>
 
 </body>
