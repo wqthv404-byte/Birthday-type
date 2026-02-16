@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Hijab</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+
+body{
+  background:black;
+  color:white;
+  overflow:hidden;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* pages */
+.page{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  padding:20px;
+}
+.active{display:flex;}
+
+h1{
+  font-size:2em;
+  text-shadow:0 0 15px hotpink;
+}
+
+/* button */
+.btn{
+  margin-top:15px;
+  padding:10px 18px;
+  border:none;
+  border-radius:20px;
+  background:hotpink;
+  color:white;
+}
+
+/* letter */
+.letter{
+  background:white;
+  color:#333;
+  padding:20px;
+  border-radius:20px;
+  width:90%;
+  max-width:350px;
+  position:relative;
+}
+
+.sticker{
+  position:absolute;
+  font-size:20px;
+}
+.s1{top:-10px;left:-10px;}
+.s2{top:-10px;right:-10px;}
+.s3{bottom:-10px;left:10px;}
+.s4{bottom:-10px;right:10px;}
+
+/* cake */
+.cake{
+  font-size:70px;
+  margin:10px 0;
+}
+
+/* candle glow */
+.flame{
+  animation: flicker .4s infinite alternate;
+}
+@keyframes flicker{
+  from{opacity:1;}
+  to{opacity:.4;}
+}
+
+/* fireworks */
+.fire{
+  position:fixed;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:boom 1s linear forwards;
+}
+@keyframes boom{
+  to{
+    transform:translate(var(--x),var(--y));
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 COUNTDOWN -->
+<div class="page active" id="page1">
+  <h1>Birthday Surprise for Hijab 💖</h1>
+  <h2 id="count">3</h2>
+</div>
+
+<!-- PAGE 2 LETTER -->
+<div class="page" id="page2">
+  <div class="letter">
+    <div class="sticker s1">🎀</div>
+    <div class="sticker s2">✨</div>
+    <div class="sticker s3">💖</div>
+    <div class="sticker s4">🎉</div>
+
+    <h2>Open Your Letter 💌</h2>
+    <button class="btn" onclick="openWish()">Open</button>
+  </div>
+</div>
+
+<!-- PAGE 3 CAKE -->
+<div class="page" id="page3">
+  <h1>Happy Birthday Hijab 🎂</h1>
+
+  <div class="cake">
+    🎂 <span class="flame">🕯️</span>
+  </div>
+
+  <button class="btn" onclick="blow()">Blow Candle ✨</button>
+
+  <p id="typing" style="margin-top:15px;"></p>
+</div>
+
+<audio id="music" src="song.mp3" preload="auto"></audio>
+
+<script>
+const pages=document.querySelectorAll(".page");
+
+/* countdown */
+let n=3;
+const c=setInterval(()=>{
+  n--;
+  document.getElementById("count").innerText=n;
+  if(n==0){
+    clearInterval(c);
+    pages[0].classList.remove("active");
+    pages[1].classList.add("active");
+  }
+},1000);
+
+/* open letter */
+function openWish(){
+  pages[1].classList.remove("active");
+  pages[2].classList.add("active");
+  document.getElementById("music").play();
+}
+
+/* typing */
+const msg="Wishing you endless happiness, smiles and love today and always 💖";
+let i=0;
+function type(){
+  if(i<msg.length){
+    document.getElementById("typing").innerHTML+=msg.charAt(i);
+    i++;
+    setTimeout(type,40);
+  }
+}
+
+/* blow candle */
+function blow(){
+  document.querySelector(".flame").style.display="none";
+  fireworks();
+  type();
+}
+
+/* fireworks */
+function fireworks(){
+  for(let i=0;i<25;i++){
+    const f=document.createElement("div");
+    f.className="fire";
+    f.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    f.style.left="50%";
+    f.style.top="40%";
+    f.style.setProperty('--x',(Math.random()*200-100)+"px");
+    f.style.setProperty('--y',(Math.random()*200-100)+"px");
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
+  }
+}
+</script>
+
+</body>
+  </html>
